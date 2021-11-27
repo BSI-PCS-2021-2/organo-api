@@ -25,7 +25,7 @@ public class CompradorController {
 		}
 		
 		this.compradorService.cadastrar(comprador);
-		return ResponseEntity.status(HttpStatus.CREATED).build(); 
+		return ResponseEntity.status(HttpStatus.CREATED).body("Comprador cadastrado com sucesso."); 
 
 
 		

@@ -72,5 +72,21 @@ public class CompradorEntity {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
+	public List<EnderecoEntity> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EnderecoEntity> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public List<PedidoEntity> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<PedidoEntity> pedidos) {
+		this.pedidos = pedidos;
+	}
+		
 }

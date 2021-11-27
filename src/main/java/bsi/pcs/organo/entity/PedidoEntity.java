@@ -90,6 +90,22 @@ public class PedidoEntity {
 
 	public void setFornecedorAssociado(FornecedorEntity fornecedorAssociado) {
 		this.fornecedorAssociado = fornecedorAssociado;
+	}
+
+	public List<ItemEntity> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemEntity> itens) {
+		this.itens = itens;
+	}
+
+	public EnderecoEntity getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoEntity endereco) {
+		this.endereco = endereco;
 	}	
 	
 }

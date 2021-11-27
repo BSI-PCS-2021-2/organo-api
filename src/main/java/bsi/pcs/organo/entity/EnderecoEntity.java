@@ -42,6 +42,14 @@ public class EnderecoEntity {
 	public String getComplemento() {
 		return complemento;
 	}
+	public CompradorEntity getComprador() {
+		return comprador;
+	}
+
+	public void setComprador(CompradorEntity comprador) {
+		this.comprador = comprador;
+	}
+
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
@@ -57,6 +65,5 @@ public class EnderecoEntity {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
 	
 }

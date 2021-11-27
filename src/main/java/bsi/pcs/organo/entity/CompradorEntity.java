@@ -2,6 +2,7 @@ package bsi.pcs.organo.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class CompradorEntity {
 	private String sobrenome;
 	@NotNull
 	private String cpf;
-	@OneToMany(mappedBy = "comprador")
+	@OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST)
 	private List<EnderecoEntity> enderecos;
 	
 	@OneToMany(mappedBy = "compradorAssociado")

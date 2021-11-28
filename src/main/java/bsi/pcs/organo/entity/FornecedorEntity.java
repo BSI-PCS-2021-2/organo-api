@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name = "fornecedor")
 public class FornecedorEntity {
@@ -16,6 +18,7 @@ public class FornecedorEntity {
 	@Column(name = "fornecedor_id")
 	private Long id;
 	private String nomeFantasia;
+	@NotNull
 	private String cnpj;
 	private String email;
 	private String senha;

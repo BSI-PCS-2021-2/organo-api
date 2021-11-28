@@ -2,7 +2,6 @@ package bsi.pcs.organo.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +26,7 @@ public class CompradorEntity {
 	private String sobrenome;
 	@NotNull
 	private String cpf;
-	@OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "comprador")
 	private List<EnderecoEntity> enderecos;
 	
 	@OneToMany(mappedBy = "compradorAssociado")
@@ -89,5 +88,9 @@ public class CompradorEntity {
 	public void setPedidos(List<PedidoEntity> pedidos) {
 		this.pedidos = pedidos;
 	}
-		
+	
+	public Long getId() {
+		return id;
+	}
+			
 }

@@ -8,4 +8,6 @@ import bsi.pcs.organo.entity.CompradorEntity;
 @Repository
 public interface CompradorRepository extends JpaRepository<CompradorEntity, Long> {
 
+	public CompradorEntity getByCpf(String cpf);
+	
 }

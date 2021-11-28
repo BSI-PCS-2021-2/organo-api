@@ -9,8 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "endereco")
+@JsonInclude(Include.NON_NULL)
 public class EnderecoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +47,7 @@ public class EnderecoEntity {
 		return complemento;
 	}
 	public CompradorEntity getComprador() {
-		return comprador;
+		return null;
 	}
 
 	public void setComprador(CompradorEntity comprador) {

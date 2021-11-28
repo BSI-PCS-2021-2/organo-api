@@ -14,11 +14,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import bsi.pcs.organo.util.MetodoPagamento;
 import bsi.pcs.organo.util.Status;
 
 @Entity
 @Table(name = "pedido")
+@JsonInclude(Include.NON_NULL)
 public class PedidoEntity {
 	
 	@Id
@@ -33,6 +37,7 @@ public class PedidoEntity {
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedorAssociado;
 	private Date dataEntrega;
+	@Column(name = "status_pedido")
 	private Status status;
 	private MetodoPagamento metodoPagamento;
 	@OneToMany
@@ -77,7 +82,7 @@ public class PedidoEntity {
 	}
 
 	public CompradorEntity getCompradorAssociado() {
-		return compradorAssociado;
+		return null;
 	}
 
 	public void setCompradorAssociado(CompradorEntity compradorAssociado) {

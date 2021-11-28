@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import bsi.pcs.organo.entity.CompradorEntity;
 import bsi.pcs.organo.entity.EnderecoEntity;
 import bsi.pcs.organo.repository.CompradorRepository;
+import bsi.pcs.organo.repository.EnderecoRepository;
 
 @Service
 public class CompradorService {
@@ -13,12 +14,40 @@ public class CompradorService {
 	@Autowired
 	private CompradorRepository compradorRepository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+		
 	public void cadastrar(CompradorEntity comprador) {
+		this.compradorRepository.save(comprador);
+		
 		if(!comprador.getEnderecos().isEmpty()) {
 			for(EnderecoEntity endereco : comprador.getEnderecos()) {
 				endereco.setComprador(comprador);
+				this.enderecoRepository.save(endereco);
 			}
 		}
-		this.compradorRepository.save(comprador);
+	}
+	
+	public CompradorEntity retornar(String cpf) {
+		CompradorEntity ce = this.compradorRepository.getByCpf(cpf);
+		return ce;
+	}
+	
+	public void atualizar(CompradorEntity comprador) {
+		CompradorEntity compradorEncontrado = this.compradorRepository.getByCpf(comprador.getCpf());
+		compradorEncontrado.setEmail(comprador.getEmail());
+		compradorEncontrado.setNome(comprador.getNome());
+		compradorEncontrado.setSobrenome(comprador.getSobrenome());
+		this.compradorRepository.save(compradorEncontrado);
+		
+		if(!comprador.getEnderecos().isEmpty()) {
+			for(EnderecoEntity ee : comprador.getEnderecos()) {
+				EnderecoEntity enderecoEncontrado = this.enderecoRepository.findByCepRuaNumeroComplementoCompradorId(ee.getCep(), ee.getRua(), ee.getNumero(), ee.getComplemento(), compradorEncontrado.getId());
+				if(enderecoEncontrado == null) {
+					ee.setComprador(compradorEncontrado);
+					this.enderecoRepository.save(ee);
+				}
+			}
+		}
 	}
 }

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "produto")
 public class ProdutoEntity {
@@ -21,8 +23,9 @@ public class ProdutoEntity {
 	private Long id;
 	private String nome;
 	private float preco;
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
-	private Byte[] foto;
+	private byte[] foto;
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedor;
@@ -53,11 +56,11 @@ public class ProdutoEntity {
 		this.validade = validade;
 	}
 
-	public Byte[] getFoto() {
+	public byte[] getFoto() {
 		return foto;
 	}
 
-	public void setFoto(Byte[] foto) {
+	public void setFoto(byte[] foto) {
 		this.foto = foto;
 	}
 
@@ -67,6 +70,10 @@ public class ProdutoEntity {
 
 	public void setFornecedor(FornecedorEntity fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 	
 }

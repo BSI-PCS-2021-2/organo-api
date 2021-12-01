@@ -49,11 +49,22 @@ public class CompradorController {
 	
 	@GetMapping("/{cpfComprador}")
 	public ResponseEntity<?> getComprador(@PathVariable String cpfComprador) {
-		if(cpfComprador == null) return ResponseEntity.badRequest().body("Por favor informar o id do comprador.");
+		if(cpfComprador == null) return ResponseEntity.badRequest().body("Por favor informar o cpf do comprador.");
 		
 		CompradorEntity comprador = this.compradorService.retornar(cpfComprador);
 		if(comprador == null) return ResponseEntity.badRequest().body("CPF informado não está associado a nenhum comprador.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(comprador);
+	}
+	
+	@GetMapping("/autenticar")
+	public ResponseEntity<?> autenticar(@RequestBody CompradorEntity comprador) {
+		if(comprador == null) return ResponseEntity.badRequest().body("Por favor informar dados do comprador.");
+		
+		if(this.compradorService.autenticar(comprador)) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Comprador autenticado com sucesso");
+		}
+		
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não foi possível autenticar comprador.");
 	}
 }

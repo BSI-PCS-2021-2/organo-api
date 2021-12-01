@@ -10,4 +10,6 @@ public interface CompradorRepository extends JpaRepository<CompradorEntity, Long
 
 	public CompradorEntity getByCpf(String cpf);
 	
+	public CompradorEntity getByEmail(String email);
+	
 }

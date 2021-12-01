@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +22,7 @@ public class FornecedorController {
 	private FornecedorService fornecedorService;
 
 	@GetMapping("/listar")
-	public ResponseEntity<?> list() {
-	
+	public ResponseEntity<?> list() {	
 		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listFornecedores()); 
 	}
 	
@@ -36,5 +37,28 @@ public class FornecedorController {
 		this.fornecedorService.cadastrar(fornecedor);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Fornecedor cadastrado com sucesso."); 
 		
+	}
+	
+	@PutMapping("/atualizar")
+	public ResponseEntity<?> update(@RequestBody(required = true) FornecedorEntity fornecedor) {
+		if(fornecedor == null) return ResponseEntity.badRequest().body("Por favor informar os dados do fornecedor.");
+		
+		if(this.fornecedorService.retornar(fornecedor.getCnpj()) == null) {
+			return ResponseEntity.badRequest().body("Fornecedor informado não existe");
+		}
+		
+		this.fornecedorService.atualizar(fornecedor);
+		return ResponseEntity.status(HttpStatus.OK).body("Fornecedor atualizado com sucesso."); 
+		
+	}
+	
+	@GetMapping("/{cnpjFornecedor}")
+	public ResponseEntity<?> getFornecedor(@PathVariable String cnpjFornecedor) {
+		if(cnpjFornecedor == null) return ResponseEntity.badRequest().body("Por favor informar o CNPJ do fornecedor.");
+		
+		FornecedorEntity fornecedor = this.fornecedorService.retornar(cnpjFornecedor);
+		if(fornecedor == null) return ResponseEntity.badRequest().body("CNPJ informado não está associado a nenhum fornecedor.");
+		
+		return ResponseEntity.status(HttpStatus.OK).body(fornecedor);
 	}
 }

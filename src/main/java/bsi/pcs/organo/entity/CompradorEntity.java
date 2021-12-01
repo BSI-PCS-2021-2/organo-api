@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "comprador")
+@JsonInclude(Include.NON_NULL)
 public class CompradorEntity {
 
 	@Id
@@ -66,7 +69,7 @@ public class CompradorEntity {
 	}
 
 	public String getSenha() {
-		return senha;
+		return null;
 	}
 
 	public void setSenha(String senha) {

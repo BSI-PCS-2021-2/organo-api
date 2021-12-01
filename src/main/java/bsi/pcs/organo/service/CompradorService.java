@@ -38,6 +38,7 @@ public class CompradorService {
 		compradorEncontrado.setEmail(comprador.getEmail());
 		compradorEncontrado.setNome(comprador.getNome());
 		compradorEncontrado.setSobrenome(comprador.getSobrenome());
+		compradorEncontrado.setSenha(comprador.getSenha());
 		this.compradorRepository.save(compradorEncontrado);
 		
 		if(!comprador.getEnderecos().isEmpty()) {
@@ -49,5 +50,11 @@ public class CompradorService {
 				}
 			}
 		}
+	}
+	
+	public boolean autenticar(CompradorEntity comprador) {
+		CompradorEntity compradorEncontrado = this.compradorRepository.getByEmail(comprador.getEmail());
+		if(comprador.getSenha().equals(compradorEncontrado.getSenha())) return true;
+		return false;
 	}
 }

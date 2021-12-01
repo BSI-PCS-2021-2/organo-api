@@ -26,4 +26,12 @@ public class FornecedorService {
 		FornecedorEntity fe = this.fornecedorRepository.getByCnpj(cnpj);
 		return fe;
 	}
+	
+	public void atualizar(FornecedorEntity fornecedor) {
+		FornecedorEntity fornecedorEncontrado = this.fornecedorRepository.getByCnpj(fornecedor.getCnpj());
+		fornecedorEncontrado.setEmail(fornecedor.getEmail());
+		fornecedorEncontrado.setNomeFantasia(fornecedor.getNomeFantasia());
+		fornecedorEncontrado.setSenha(fornecedor.getSenha());
+		this.fornecedorRepository.save(fornecedorEncontrado);
+	}
 }

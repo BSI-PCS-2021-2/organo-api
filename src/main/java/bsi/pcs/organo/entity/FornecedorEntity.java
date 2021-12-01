@@ -7,10 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "fornecedor")
+@JsonInclude(Include.NON_NULL)
 public class FornecedorEntity {
 
 	@Id
@@ -50,11 +53,15 @@ public class FornecedorEntity {
 	}
 
 	public String getSenha() {
-		return senha;
+		return null;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 	
 }

@@ -12,9 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "produto")
+@JsonInclude(Include.NON_NULL)
 public class ProdutoEntity {
 
 	@Id
@@ -25,7 +29,9 @@ public class ProdutoEntity {
 	private float preco;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private byte[] foto;
+	private String nomeArquivoFoto;
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedor;
@@ -74,6 +80,14 @@ public class ProdutoEntity {
 	
 	public Long getId() {
 		return id;
+	}
+
+	public String getNomeArquivoFoto() {
+		return nomeArquivoFoto;
+	}
+
+	public void setNomeArquivoFoto(String nomeArquivoFoto) {
+		this.nomeArquivoFoto = nomeArquivoFoto;
 	}
 	
 }

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -24,6 +25,7 @@ public class FornecedorEntity {
 	@NotNull
 	private String cnpj;
 	private String email;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	
 	public FornecedorEntity() {}
@@ -53,7 +55,7 @@ public class FornecedorEntity {
 	}
 
 	public String getSenha() {
-		return null;
+		return senha;
 	}
 
 	public void setSenha(String senha) {

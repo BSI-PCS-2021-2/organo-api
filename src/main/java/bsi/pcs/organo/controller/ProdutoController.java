@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ import bsi.pcs.organo.service.FornecedorService;
 import bsi.pcs.organo.service.ProdutoService;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/produto/{cnpjFornecedor}")
 public class ProdutoController {
 
 	@Autowired
@@ -30,10 +31,9 @@ public class ProdutoController {
 	@Autowired
 	private FornecedorService fornecedorService;
 
-	@PostMapping("/{cnpjFornecedor}/cadastrar")
+	@PostMapping("/cadastrar")
 	public ResponseEntity<?> create(@RequestBody(required = true) ProdutoEntity produto,
-									@PathVariable String cnpjFornecedor) {
-		if(produto == null) return ResponseEntity.badRequest().body("Por favor informar todos os dados do produto.");
+									@PathVariable(required = true) String cnpjFornecedor) {
 		
 		FornecedorEntity fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
 		produto.setFornecedor(fornecedorEncontrado);
@@ -48,8 +48,8 @@ public class ProdutoController {
 	}
 	
 	@PutMapping("/cadastrarFoto/{produtoId}")
-	public ResponseEntity<?> cadastrarFoto(@RequestParam("foto") MultipartFile foto, @PathVariable Long produtoId) throws IOException {
-		if(produtoId == null) return ResponseEntity.badRequest().body("Por favor informar id do produto.");
+	public ResponseEntity<?> cadastrarFoto(@RequestParam("foto") MultipartFile foto, 
+			@PathVariable(required = true) Long produtoId) throws IOException {
 		
 		if(foto == null) return ResponseEntity.badRequest().body("Foto vazia.");
 		
@@ -66,7 +66,6 @@ public class ProdutoController {
 	
 	@PutMapping("/atualizar")
 	public ResponseEntity<?> update(@RequestBody(required = true) ProdutoEntity produto) {
-		if(produto == null) return ResponseEntity.badRequest().body("Por favor informar os dados do produto.");
 		
 		if(this.produtoService.retornar(produto.getFornecedor().getCnpj(), produto.getNome()) == null) {
 			return ResponseEntity.badRequest().body("Produto informado não existe");
@@ -77,14 +76,23 @@ public class ProdutoController {
 		
 	}
 	
-	@GetMapping("/{cnpjFornecedor}/retornar/{nomeProduto}")
-	public ResponseEntity<?> getProduto(@PathVariable String cnpjFornecedor, @PathVariable String nomeProduto) {
-		if(cnpjFornecedor == null) return ResponseEntity.badRequest().body("Por favor informar o CNPJ do fornecedor.");
-		if(nomeProduto == null) return ResponseEntity.badRequest().body("Por favor informar o nome do produto.");
-		
-		ProdutoEntity produto = this.produtoService.retornar(cnpjFornecedor, nomeProduto);
+	@GetMapping("/{produtoId}")
+	public ResponseEntity<?> getProduto(@PathVariable(required = true) Long produtoId) {
+	
+		ProdutoEntity produto = this.produtoService.retornarById(produtoId);
 		if(produto == null) return ResponseEntity.badRequest().body("Os dados informados não estão associados a nenhum produto.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(produto);
 	}
+	
+	@DeleteMapping("/deletar/{produtoId}")
+	public ResponseEntity<?> deleteProduto(@PathVariable(required = true) Long produtoId) {
+		ProdutoEntity produto = this.produtoService.retornarById(produtoId);
+		if(produto == null) return ResponseEntity.badRequest().body("Os id informado não estão associados a nenhum produto.");
+		
+		this.produtoService.deletarProduto(produtoId);
+		return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+		
+	}
+	
 }

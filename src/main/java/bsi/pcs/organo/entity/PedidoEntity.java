@@ -11,11 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import bsi.pcs.organo.util.MetodoPagamento;
 import bsi.pcs.organo.util.Status;
@@ -30,12 +31,15 @@ public class PedidoEntity {
 	@Column(name = "pedido_id")
 	private Long id;
 	private float valor;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private CompradorEntity compradorAssociado;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedorAssociado;
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataEntrega;
 	@Column(name = "status_pedido")
 	private Status status;
@@ -43,7 +47,7 @@ public class PedidoEntity {
 	@OneToMany
 	@JoinColumn(name = "item_id")
 	private List<ItemEntity> itens;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "endereco_id")
 	private EnderecoEntity endereco;
 	
@@ -82,7 +86,7 @@ public class PedidoEntity {
 	}
 
 	public CompradorEntity getCompradorAssociado() {
-		return null;
+		return compradorAssociado;
 	}
 
 	public void setCompradorAssociado(CompradorEntity compradorAssociado) {
@@ -112,5 +116,9 @@ public class PedidoEntity {
 	public void setEndereco(EnderecoEntity endereco) {
 		this.endereco = endereco;
 	}	
+	
+	public Long getId() {
+		return id;
+	}
 	
 }

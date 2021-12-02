@@ -10,5 +10,7 @@ import bsi.pcs.organo.entity.FornecedorEntity;
 public interface FornecedorRepository extends JpaRepository<FornecedorEntity, Long> {
 
 	public FornecedorEntity getByCnpj(String cnpj);
+	
+	public FornecedorEntity getByEmail(String email);
 
 }

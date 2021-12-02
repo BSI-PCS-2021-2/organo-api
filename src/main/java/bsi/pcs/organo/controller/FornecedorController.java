@@ -28,7 +28,6 @@ public class FornecedorController {
 	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<?> create(@RequestBody(required = true) FornecedorEntity fornecedor) {
-		if(fornecedor == null) return ResponseEntity.badRequest().body("Por favor informar todos os dados do fornecedor.");
 		
 		if(this.fornecedorService.retornar(fornecedor.getCnpj()) != null) {
 			return ResponseEntity.badRequest().body("Fornecedor já está cadastrado");
@@ -41,7 +40,6 @@ public class FornecedorController {
 	
 	@PutMapping("/atualizar")
 	public ResponseEntity<?> update(@RequestBody(required = true) FornecedorEntity fornecedor) {
-		if(fornecedor == null) return ResponseEntity.badRequest().body("Por favor informar os dados do fornecedor.");
 		
 		if(this.fornecedorService.retornar(fornecedor.getCnpj()) == null) {
 			return ResponseEntity.badRequest().body("Fornecedor informado não existe");
@@ -53,12 +51,27 @@ public class FornecedorController {
 	}
 	
 	@GetMapping("/{cnpjFornecedor}")
-	public ResponseEntity<?> getFornecedor(@PathVariable String cnpjFornecedor) {
-		if(cnpjFornecedor == null) return ResponseEntity.badRequest().body("Por favor informar o CNPJ do fornecedor.");
+	public ResponseEntity<?> getFornecedor(@PathVariable(required = true) String cnpjFornecedor) {
 		
 		FornecedorEntity fornecedor = this.fornecedorService.retornar(cnpjFornecedor);
 		if(fornecedor == null) return ResponseEntity.badRequest().body("CNPJ informado não está associado a nenhum fornecedor.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fornecedor);
 	}
+	
+	@GetMapping("/autenticar")
+	public ResponseEntity<?> autenticar(@RequestBody(required = true) FornecedorEntity fornecedor) {
+		
+		if(this.fornecedorService.autenticar(fornecedor)) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Fornecedor autenticado com sucesso");
+		}
+		
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não foi possível autenticar fornecedor.");
+	}
+	
+	@GetMapping("/{cnpjFornecedor}/listarProdutos")
+	public ResponseEntity<?> listProdutos(@PathVariable(required = true) String cnpjFornecedor) {	
+		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listarProdutos(cnpjFornecedor)); 
+	}
+	
 }

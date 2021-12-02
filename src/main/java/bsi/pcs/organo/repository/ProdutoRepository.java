@@ -1,5 +1,6 @@
 package bsi.pcs.organo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 	public ProdutoEntity findByFornecedorCnpjAndNome(String fornecedorCnpj, String nomeProduto);
 	
 	public Optional<ProdutoEntity> findById(Long id);
+	
+	@Query(value = "SELECT * FROM produto p INNER JOIN fornecedor f on f.cnpj = ?1", 
+			  nativeQuery = true)
+	public List<ProdutoEntity> findByFornecedorCnpj(String cnpj);
 }

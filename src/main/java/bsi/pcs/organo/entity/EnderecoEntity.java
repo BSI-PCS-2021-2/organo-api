@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "endereco")
@@ -25,6 +26,7 @@ public class EnderecoEntity {
 	private String complemento;
 	private String cep;
 	private String bairro;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private CompradorEntity comprador;
@@ -47,7 +49,7 @@ public class EnderecoEntity {
 		return complemento;
 	}
 	public CompradorEntity getComprador() {
-		return null;
+		return comprador;
 	}
 
 	public void setComprador(CompradorEntity comprador) {

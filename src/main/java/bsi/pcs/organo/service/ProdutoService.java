@@ -31,6 +31,7 @@ public class ProdutoService {
 	}
 	
 	public void cadastrarFoto(ProdutoEntity produto, MultipartFile foto) throws IOException {
+		produto.setNomeArquivoFoto(foto.getName());
 		produto.setFoto(foto.getBytes());
 		this.produtoRepository.save(produto);
 	}
@@ -42,5 +43,11 @@ public class ProdutoService {
 		produtoEncontrado.setPreco(produto.getPreco());
 		produtoEncontrado.setValidade(produto.getValidade());
 		this.produtoRepository.save(produtoEncontrado);
+	}
+
+	public void deletarProduto(Long produtoId) {
+		Optional<ProdutoEntity> pe = this.produtoRepository.findById(produtoId);
+		ProdutoEntity produtoEncontrado = pe.get();
+		this.produtoRepository.delete(produtoEncontrado);
 	}
 }

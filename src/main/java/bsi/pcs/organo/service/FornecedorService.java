@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bsi.pcs.organo.entity.FornecedorEntity;
+import bsi.pcs.organo.entity.PedidoEntity;
 import bsi.pcs.organo.entity.ProdutoEntity;
 import bsi.pcs.organo.repository.FornecedorRepository;
+import bsi.pcs.organo.repository.PedidoRepository;
 import bsi.pcs.organo.repository.ProdutoRepository;
 
 @Service
@@ -18,6 +20,9 @@ public class FornecedorService {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 	
 	public List<FornecedorEntity> listFornecedores() {
 		return this.fornecedorRepository.findAll();
@@ -53,6 +58,14 @@ public class FornecedorService {
 		}
 		
 		return produtosEncontrados;
+	}
+	
+	public List<PedidoEntity> listarPedidos(String cnpj) {
+		List<PedidoEntity> pedidosEncontrados = this.pedidoRepository.findByFornecedorCnpj(cnpj);
+		for(PedidoEntity pedido : pedidosEncontrados) {
+			pedido.setFornecedorAssociado(null);
+		}
+		return pedidosEncontrados;
 	}
 	
 

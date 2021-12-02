@@ -1,12 +1,16 @@
 package bsi.pcs.organo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bsi.pcs.organo.entity.CompradorEntity;
 import bsi.pcs.organo.entity.EnderecoEntity;
+import bsi.pcs.organo.entity.PedidoEntity;
 import bsi.pcs.organo.repository.CompradorRepository;
 import bsi.pcs.organo.repository.EnderecoRepository;
+import bsi.pcs.organo.repository.PedidoRepository;
 
 @Service
 public class CompradorService {
@@ -16,6 +20,9 @@ public class CompradorService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 		
 	public void cadastrar(CompradorEntity comprador) {
 		this.compradorRepository.save(comprador);
@@ -56,5 +63,14 @@ public class CompradorService {
 		CompradorEntity compradorEncontrado = this.compradorRepository.getByEmail(comprador.getEmail());
 		if(comprador.getSenha().equals(compradorEncontrado.getSenha())) return true;
 		return false;
+	}
+
+	public List<PedidoEntity> listarPedidos(String cpfComprador) {
+		List<PedidoEntity> pedidosEncontrados = this.pedidoRepository.findByCompradorCpf(cpfComprador);
+		for(PedidoEntity pedido : pedidosEncontrados) {
+			pedido.setCompradorAssociado(null);
+		}
+		
+		return pedidosEncontrados;
 	}
 }

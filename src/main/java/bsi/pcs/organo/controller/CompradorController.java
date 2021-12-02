@@ -63,4 +63,9 @@ public class CompradorController {
 		
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não foi possível autenticar comprador.");
 	}
+	
+	@GetMapping("/{cpfComprador}/listarPedidos")
+	public ResponseEntity<?> listPedidos(@PathVariable(required = true) String cpfComprador) {	
+		return ResponseEntity.status(HttpStatus.OK).body(this.compradorService.listarPedidos(cpfComprador)); 
+	}
 }

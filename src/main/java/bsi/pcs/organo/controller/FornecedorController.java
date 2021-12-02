@@ -74,4 +74,11 @@ public class FornecedorController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listarProdutos(cnpjFornecedor)); 
 	}
 	
+	@GetMapping("/{cnpjFornecedor}/listarPedidos")
+	public ResponseEntity<?> listPedidos(@PathVariable(required = true) String cnpjFornecedor) {	
+		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listarPedidos(cnpjFornecedor)); 
+	}
+	
+	
+	
 }

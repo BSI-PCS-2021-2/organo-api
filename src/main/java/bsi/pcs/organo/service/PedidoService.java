@@ -50,6 +50,7 @@ public class PedidoService {
 		Optional<PedidoEntity> pedidoEncontrado = this.pedidoRepository.findById(pedidoId);
 		Status stat = Status.valueOf(status);
 		pedidoEncontrado.get().setStatus(stat);
+		this.pedidoRepository.save(pedidoEncontrado.get());
 	}
 
 	public Object retornar(Date dataEntrega, String fornecedorCnpj) {

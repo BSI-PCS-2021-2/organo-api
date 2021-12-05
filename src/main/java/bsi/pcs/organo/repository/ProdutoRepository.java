@@ -18,7 +18,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
 	
 	public Optional<ProdutoEntity> findById(Long id);
 	
-	@Query(value = "SELECT * FROM produto p INNER JOIN fornecedor f on f.cnpj = ?1", 
+	@Query(value = "SELECT * FROM produto p INNER JOIN fornecedor f on (f.cnpj = ?1 and f.fornecedor_id = p.fornecedor_id)", 
 			  nativeQuery = true)
 	public List<ProdutoEntity> findByFornecedorCnpj(String cnpj);
 }

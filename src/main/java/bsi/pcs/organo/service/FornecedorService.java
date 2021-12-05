@@ -52,19 +52,12 @@ public class FornecedorService {
 	}
 	
 	public List<ProdutoEntity> listarProdutos(String cnpj) {
-		List<ProdutoEntity> produtosEncontrados =  this.produtoRepository.findByFornecedorCnpj(cnpj);
-		for(ProdutoEntity produto : produtosEncontrados) {
-			produto.setFornecedor(null);
-		}
-		
+		List<ProdutoEntity> produtosEncontrados =  this.produtoRepository.findByFornecedorCnpj(cnpj);		
 		return produtosEncontrados;
 	}
 	
 	public List<PedidoEntity> listarPedidos(String cnpj) {
 		List<PedidoEntity> pedidosEncontrados = this.pedidoRepository.findByFornecedorCnpj(cnpj);
-		for(PedidoEntity pedido : pedidosEncontrados) {
-			pedido.setFornecedorAssociado(null);
-		}
 		return pedidosEncontrados;
 	}
 	

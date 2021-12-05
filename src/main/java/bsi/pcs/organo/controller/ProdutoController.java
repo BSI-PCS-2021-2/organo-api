@@ -1,6 +1,5 @@
 package bsi.pcs.organo.controller;
 
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import bsi.pcs.organo.entity.FornecedorEntity;
 import bsi.pcs.organo.entity.ProdutoEntity;
@@ -44,23 +41,6 @@ public class ProdutoController {
 		
 		this.produtoService.cadastrar(produto);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso."); 
-		
-	}
-	
-	@PutMapping("/cadastrarFoto/{produtoId}")
-	public ResponseEntity<?> cadastrarFoto(@RequestParam("foto") MultipartFile foto, 
-			@PathVariable(required = true) Long produtoId) throws IOException {
-		
-		if(foto == null) return ResponseEntity.badRequest().body("Foto vazia.");
-		
-		ProdutoEntity produtoEncontrado = this.produtoService.retornarById(produtoId);
-		
-		if(produtoEncontrado == null) {
-			return ResponseEntity.badRequest().body("Produto não existe");
-		}
-		
-		this.produtoService.cadastrarFoto(produtoEncontrado, foto);
-		return ResponseEntity.status(HttpStatus.OK).body("Foto cadastrada com sucesso."); 
 		
 	}
 	

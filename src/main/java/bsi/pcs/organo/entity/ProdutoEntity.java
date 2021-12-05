@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
@@ -29,8 +28,8 @@ public class ProdutoEntity {
 	private float preco;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
-	private byte[] foto;
-	private String nomeArquivoFoto;
+	@Column(name = "foto_url")
+	private String fotoUrl;
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedor;
@@ -61,14 +60,6 @@ public class ProdutoEntity {
 		this.validade = validade;
 	}
 
-	public byte[] getFoto() {
-		return foto;
-	}
-
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
-
 	public FornecedorEntity getFornecedor() {
 		return fornecedor;
 	}
@@ -81,12 +72,12 @@ public class ProdutoEntity {
 		return id;
 	}
 
-	public String getNomeArquivoFoto() {
-		return nomeArquivoFoto;
+	public String getFotoUrl() {
+		return fotoUrl;
 	}
 
-	public void setNomeArquivoFoto(String nomeArquivoFoto) {
-		this.nomeArquivoFoto = nomeArquivoFoto;
+	public void setFotoUrl(String fotoUrl) {
+		this.fotoUrl = fotoUrl;
 	}
 	
 }

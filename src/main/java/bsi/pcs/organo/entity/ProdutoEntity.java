@@ -29,7 +29,6 @@ public class ProdutoEntity {
 	private float preco;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private byte[] foto;
 	private String nomeArquivoFoto;
 	@ManyToOne

@@ -59,7 +59,7 @@ public class FornecedorController {
 		return ResponseEntity.status(HttpStatus.OK).body(fornecedor);
 	}
 	
-	@GetMapping("/autenticar")
+	@PostMapping("/autenticar")
 	public ResponseEntity<?> autenticar(@RequestBody(required = true) FornecedorEntity fornecedor) {
 		
 		if(this.fornecedorService.autenticar(fornecedor)) {

@@ -54,7 +54,7 @@ public class CompradorController {
 		return ResponseEntity.status(HttpStatus.OK).body(comprador);
 	}
 	
-	@GetMapping("/autenticar")
+	@PostMapping("/autenticar")
 	public ResponseEntity<?> autenticar(@RequestBody(required = true) CompradorEntity comprador) {
 		
 		if(this.compradorService.autenticar(comprador)) {

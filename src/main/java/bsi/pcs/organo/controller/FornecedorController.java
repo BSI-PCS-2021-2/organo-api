@@ -61,9 +61,9 @@ public class FornecedorController {
 	
 	@PostMapping("/autenticar")
 	public ResponseEntity<?> autenticar(@RequestBody(required = true) FornecedorEntity fornecedor) {
-		
-		if(this.fornecedorService.autenticar(fornecedor)) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Fornecedor autenticado com sucesso");
+		FornecedorEntity fornecedorAutenticado = this.fornecedorService.autenticar(fornecedor);
+		if(fornecedorAutenticado != null) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(fornecedorAutenticado);
 		}
 		
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não foi possível autenticar fornecedor.");

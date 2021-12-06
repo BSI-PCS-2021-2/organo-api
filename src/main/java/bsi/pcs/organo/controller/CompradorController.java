@@ -56,9 +56,9 @@ public class CompradorController {
 	
 	@PostMapping("/autenticar")
 	public ResponseEntity<?> autenticar(@RequestBody(required = true) CompradorEntity comprador) {
-		
-		if(this.compradorService.autenticar(comprador)) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Comprador autenticado com sucesso");
+		CompradorEntity compradorAutenticado = this.compradorService.autenticar(comprador);
+		if(compradorAutenticado != null) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(compradorAutenticado);
 		}
 		
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não foi possível autenticar comprador.");

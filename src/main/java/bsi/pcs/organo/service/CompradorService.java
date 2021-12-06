@@ -59,10 +59,10 @@ public class CompradorService {
 		}
 	}
 	
-	public boolean autenticar(CompradorEntity comprador) {
+	public CompradorEntity autenticar(CompradorEntity comprador) {
 		CompradorEntity compradorEncontrado = this.compradorRepository.getByEmail(comprador.getEmail());
-		if(comprador.getSenha().equals(compradorEncontrado.getSenha())) return true;
-		return false;
+		if(comprador.getSenha().equals(compradorEncontrado.getSenha())) return compradorEncontrado;
+		return null;
 	}
 
 	public List<PedidoEntity> listarPedidos(String cpfComprador) {

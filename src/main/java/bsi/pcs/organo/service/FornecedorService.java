@@ -45,10 +45,10 @@ public class FornecedorService {
 		this.fornecedorRepository.save(fornecedorEncontrado);
 	}
 
-	public boolean autenticar(FornecedorEntity fornecedor) {
+	public FornecedorEntity autenticar(FornecedorEntity fornecedor) {
 		FornecedorEntity fornecedorEncontrado = this.fornecedorRepository.getByEmail(fornecedor.getEmail());
-		if(fornecedor.getSenha().equals(fornecedorEncontrado.getSenha())) return true;
-		return false;
+		if(fornecedor.getSenha().equals(fornecedorEncontrado.getSenha())) return fornecedorEncontrado;
+		return null;
 	}
 	
 	public List<ProdutoEntity> listarProdutos(String cnpj) {

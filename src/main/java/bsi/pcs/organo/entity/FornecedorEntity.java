@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
+import bsi.pcs.organo.util.InfoEntrega;
+
 @Entity
 @Table(name = "fornecedor")
 @JsonInclude(Include.NON_NULL)
@@ -27,6 +29,8 @@ public class FornecedorEntity {
 	private String email;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
+	@Column(name = "info_entrega")
+	private InfoEntrega infoEntrega;
 	
 	public FornecedorEntity() {}
 
@@ -64,6 +68,14 @@ public class FornecedorEntity {
 	
 	public Long getId() {
 		return id;
+	}
+
+	public InfoEntrega getInfoEntrega() {
+		return infoEntrega;
+	}
+
+	public void setInfoEntrega(InfoEntrega infoEntrega) {
+		this.infoEntrega = infoEntrega;
 	}
 	
 }

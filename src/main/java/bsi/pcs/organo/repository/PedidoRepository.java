@@ -16,7 +16,7 @@ public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 			  nativeQuery = true)
 	public PedidoEntity findByDataEntregaAndFornecedorCnpj(Date dataEntrega, String fornecedorCnpj);
 	
-	@Query(value = "SELECT * FROM pedido p INNER JOIN fornecedor f on (f.cnpj = ?1)", 
+	@Query(value = "SELECT * FROM pedido p INNER JOIN fornecedor f on (f.cnpj = ?1 and f.fornecedor_id = p.fornecedor_id)", 
 			  nativeQuery = true)
 	public List<PedidoEntity> findByFornecedorCnpj(String cnpj);
 	

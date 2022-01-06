@@ -27,7 +27,6 @@ public class ProdutoEntity {
 	private String nome;
 	private float preco;
 	private int quantidade;
-	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
 	@Column(name = "foto_url")
 	private String fotoUrl;

@@ -68,6 +68,8 @@ public class PedidoService {
 		
 		for(ItemEntity item : pedido.getItens()) {
 			ProdutoEntity produtoEncontrado = this.produtoRepository.findByFornecedorCnpjAndNome(fornecedorCnpj, item.getProduto().getNome());
+			produtoEncontrado.setQuantidade(produtoEncontrado.getQuantidade() - item.getQuantidade());
+			this.produtoRepository.save(produtoEncontrado);
 			item.setProduto(produtoEncontrado);
 			this.itemRepository.save(item);
 		}

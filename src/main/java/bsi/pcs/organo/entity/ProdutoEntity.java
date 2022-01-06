@@ -26,6 +26,7 @@ public class ProdutoEntity {
 	private Long id;
 	private String nome;
 	private float preco;
+	private int quantidade;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date validade;
 	@Column(name = "foto_url")
@@ -78,6 +79,14 @@ public class ProdutoEntity {
 
 	public void setFotoUrl(String fotoUrl) {
 		this.fotoUrl = fotoUrl;
+	}
+	
+	public void setQuantidade(int qtd) {
+		this.quantidade = qtd;
+	}
+	
+	public int getQuantidade() {
+		return quantidade;
 	}
 	
 }

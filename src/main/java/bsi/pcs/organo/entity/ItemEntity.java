@@ -9,8 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "item")
+@JsonInclude(Include.NON_NULL)
 public class ItemEntity {
 
 	@Id
@@ -21,7 +25,9 @@ public class ItemEntity {
 	@JoinColumn(name = "produto_id")
 	private ProdutoEntity produto;
 	private int quantidade;
-	
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
+	private PedidoEntity pedido;
 	public ItemEntity() {}
 
 	public ProdutoEntity getProduto() {
@@ -40,4 +46,11 @@ public class ItemEntity {
 		this.quantidade = quantidade;
 	}
 	
+	public PedidoEntity getPedido() {
+		return null;
+	}
+
+	public void setPedido(PedidoEntity pedido) {
+		this.pedido = pedido;
+	}
 }

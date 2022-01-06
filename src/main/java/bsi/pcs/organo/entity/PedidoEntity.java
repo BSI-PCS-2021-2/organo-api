@@ -3,6 +3,7 @@ package bsi.pcs.organo.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,8 +45,8 @@ public class PedidoEntity {
 	@Column(name = "status_pedido")
 	private Status status;
 	private MetodoPagamento metodoPagamento;
-	@OneToMany
-	@JoinColumn(name = "item_id")
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "pedido_id")
 	private List<ItemEntity> itens;
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")

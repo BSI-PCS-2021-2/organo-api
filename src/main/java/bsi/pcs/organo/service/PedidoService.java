@@ -1,5 +1,6 @@
 package bsi.pcs.organo.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -41,6 +42,9 @@ public class PedidoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 
 	public Object retornarById(Long pedidoId) {
 		return this.pedidoRepository.findById(pedidoId);
@@ -57,7 +61,7 @@ public class PedidoService {
 		return this.pedidoRepository.findByDataEntregaAndFornecedorCnpj(dataEntrega, fornecedorCnpj);
 	}
 
-	public void registrar(PedidoEntity pedido, String compradorCpf, String fornecedorCnpj) {
+	public void registrar(PedidoEntity pedido, String compradorCpf, String fornecedorCnpj) throws IOException {
 		CompradorEntity compradorEncontrado = this.compradorRepository.getByCpf(compradorCpf);
 		compradorEncontrado.addPedido(pedido);
 		FornecedorEntity fornecedorEncontrado = this.fornecedorRepository.getByCnpj(fornecedorCnpj);
@@ -75,6 +79,17 @@ public class PedidoService {
 		}
 		
 		this.pedidoRepository.save(pedido);
+		this.enviarEmail(compradorEncontrado.getEmail(), fornecedorEncontrado.getEmail());
+	}
+	
+	private void enviarEmail(String emailComprador, String emailFornecedor) throws IOException {
+		String contentComprador = "Seu pedido acaba de ser criado. Acompanhe o status do seu pedido na sua página de perfil.";
+		String assuntoComprador = "Recebemos seu pedido!";
+		String contentFornecedor = "Um pedido acabou de chegar para você. Para mais detalhes, verifique seus pedidos em sua página de perfil.";
+		String assuntoFornecedor = "Um pedido chegou para você!";
+		String emailFrom = "organomercadodeorganicos@gmail.com";
+		this.emailService.sendEmail(emailFrom, emailComprador, contentComprador, assuntoComprador);
+		this.emailService.sendEmail(emailFrom, emailFornecedor, contentFornecedor, assuntoFornecedor);
 	}
 
 }

@@ -1,5 +1,7 @@
 package bsi.pcs.organo.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class PedidoController {
 	@PostMapping("/{fornecedorCnpj}/registrar/{compradorCpf}")
 	public ResponseEntity<?> register(@RequestBody(required = true) PedidoEntity pedido,
 									  @PathVariable(required = true) String fornecedorCnpj,
-									  @PathVariable(required = true) String compradorCpf) {
+									  @PathVariable(required = true) String compradorCpf) throws IOException {
 		
 		if(this.pedidoService.retornar(pedido.getDataEntrega(), fornecedorCnpj) != null) {
 			return ResponseEntity.badRequest().body("Pedido já foi registrado previamente.");

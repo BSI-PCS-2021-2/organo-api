@@ -19,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import bsi.pcs.organo.util.InfoEntrega;
+import bsi.pcs.organo.util.InfoHorarios;
 import bsi.pcs.organo.util.MetodoPagamento;
 import bsi.pcs.organo.util.Status;
 
@@ -51,6 +53,10 @@ public class PedidoEntity {
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
 	private EnderecoEntity endereco;
+	@Column(name = "horario_entrega")
+	private InfoHorarios horarioEntrega;
+	@Column(name = "forma_entrega")
+	private InfoEntrega formaEntrega;
 	
 	public PedidoEntity() {}
 	
@@ -121,5 +127,20 @@ public class PedidoEntity {
 	public Long getId() {
 		return id;
 	}
-	
+
+	public InfoHorarios getHorarioEntrega() {
+		return horarioEntrega;
+	}
+
+	public void setHorarioEntrega(InfoHorarios horarioEntrega) {
+		this.horarioEntrega = horarioEntrega;
+	}
+
+	public InfoEntrega getFormaEntrega() {
+		return formaEntrega;
+	}
+
+	public void setFormaEntrega(InfoEntrega formaEntrega) {
+		this.formaEntrega = formaEntrega;
+	}
 }

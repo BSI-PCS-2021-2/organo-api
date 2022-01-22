@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bsi.pcs.organo.entity.FornecedorEntity;
+import bsi.pcs.organo.entity.HorarioEntity;
 import bsi.pcs.organo.entity.PedidoEntity;
 import bsi.pcs.organo.entity.ProdutoEntity;
 import bsi.pcs.organo.repository.FornecedorRepository;
+import bsi.pcs.organo.repository.HorarioRepository;
 import bsi.pcs.organo.repository.PedidoRepository;
 import bsi.pcs.organo.repository.ProdutoRepository;
 
@@ -24,12 +26,22 @@ public class FornecedorService {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
+	@Autowired
+	private HorarioRepository horarioRepository;
+	
 	public List<FornecedorEntity> listFornecedores() {
 		return this.fornecedorRepository.findAll();
 	}
 	
 	public void cadastrar(FornecedorEntity fornecedor) {
 		this.fornecedorRepository.save(fornecedor);
+		
+		if(!fornecedor.getHorarios().isEmpty()) {
+			for(HorarioEntity horario : fornecedor.getHorarios()) {
+				horario.setFornecedor(fornecedor);
+				this.horarioRepository.save(horario);
+			}
+		}
 	}
 	
 	public FornecedorEntity retornar(String cnpj) {
@@ -60,6 +72,4 @@ public class FornecedorService {
 		List<PedidoEntity> pedidosEncontrados = this.pedidoRepository.findByFornecedorCnpj(cnpj);
 		return pedidosEncontrados;
 	}
-	
-
 }

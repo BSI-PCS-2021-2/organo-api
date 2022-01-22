@@ -1,10 +1,14 @@
 package bsi.pcs.organo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,6 +37,8 @@ public class FornecedorEntity {
 	private InfoEntrega infoEntrega;
 	@Column(name = "telefone_movel")
 	private String telefoneMovel;
+	@OneToMany(mappedBy = "fornecedor")
+	private List<HorarioEntity> horarios;
 
 	public FornecedorEntity() {}
 
@@ -88,4 +94,20 @@ public class FornecedorEntity {
 		this.telefoneMovel = telefoneMovel;
 	}
 	
+	public List<HorarioEntity> getHorarios() {
+		return horarios;
+	}
+	
+	public List<String> getHorariosValores() {
+		List<String> h = new ArrayList<>();
+		for(HorarioEntity he : horarios) {
+			h.add(he.getHorarioSelecionado().getInfoHorarios());
+		}
+		
+		return h;
+	}
+
+	public void setHorarios(List<HorarioEntity> horarios) {
+		this.horarios = horarios;
+	}
 }

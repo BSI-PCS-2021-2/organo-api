@@ -78,7 +78,4 @@ public class FornecedorController {
 	public ResponseEntity<?> listPedidos(@PathVariable(required = true) String cnpjFornecedor) {	
 		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listarPedidos(cnpjFornecedor)); 
 	}
-	
-	
-	
 }

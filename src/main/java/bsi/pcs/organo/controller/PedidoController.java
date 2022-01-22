@@ -38,7 +38,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping("/atualizarStatus/{pedidoId}")
-	public ResponseEntity<?> register(@PathVariable(required = true) Long pedidoId, @RequestParam("status") String status) {
+	public ResponseEntity<?> atualizarStatus(@PathVariable(required = true) Long pedidoId, @RequestParam("status") String status) {
 		
 		if(this.pedidoService.retornarById(pedidoId) == null) {
 			return ResponseEntity.badRequest().body("Pedido não existe.");
@@ -48,7 +48,4 @@ public class PedidoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body("Status do pedido atualizado com sucesso."); 
 		
 	}
-	
-	
-	
 }

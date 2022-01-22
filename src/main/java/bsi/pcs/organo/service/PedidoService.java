@@ -43,7 +43,7 @@ public class PedidoService {
 	private EnderecoRepository enderecoRepository;
 	
 	@Autowired
-	private EmailService emailService;
+	private NotificationService notificationService;
 	
 
 	public Object retornarById(Long pedidoId) {
@@ -80,6 +80,7 @@ public class PedidoService {
 		
 		this.pedidoRepository.save(pedido);
 		this.enviarEmail(compradorEncontrado.getEmail(), fornecedorEncontrado.getEmail());
+		this.enviarSms(compradorEncontrado.getCelular(), fornecedorEncontrado.getTelefoneMovel());
 	}
 	
 	private void enviarEmail(String emailComprador, String emailFornecedor) throws IOException {
@@ -88,8 +89,15 @@ public class PedidoService {
 		String contentFornecedor = "Um pedido acabou de chegar para você. Para mais detalhes, verifique seus pedidos em sua página de perfil.";
 		String assuntoFornecedor = "Um pedido chegou para você!";
 		String emailFrom = "organomercadodeorganicos@gmail.com";
-		this.emailService.sendEmail(emailFrom, emailComprador, contentComprador, assuntoComprador);
-		this.emailService.sendEmail(emailFrom, emailFornecedor, contentFornecedor, assuntoFornecedor);
+		this.notificationService.sendEmail(emailFrom, emailComprador, contentComprador, assuntoComprador);
+		this.notificationService.sendEmail(emailFrom, emailFornecedor, contentFornecedor, assuntoFornecedor);
+	}
+	
+	private void enviarSms(String celularComprador, String celularFornecedor) {
+		String contentComprador = "Recebemos seu pedido!";
+		String contentFornecedor = "Um pedido acabou de chegar para você!";
+		if(celularComprador != null) this.notificationService.sendSms("+55" + celularComprador, contentComprador);
+		if(celularFornecedor != null) this.notificationService.sendSms("+55" + celularFornecedor, contentFornecedor);
 	}
 
 }

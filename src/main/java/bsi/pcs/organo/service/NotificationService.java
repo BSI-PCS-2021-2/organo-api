@@ -11,9 +11,16 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 @Service
-public class EmailService {
+public class NotificationService {
+	
+    private static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    private static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
+    private static final String API_KEY = System.getenv("SENDGRID_API_KEY");
 
 	public void sendEmail(String emailFrom, String emailTo, String textContent, String subject) throws IOException {
 	    Email from = new Email(emailFrom);
@@ -21,7 +28,7 @@ public class EmailService {
 	    Content content = new Content("text/plain", textContent);
 	    Mail mail = new Mail(from, subject, to, content);
 
-	    SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	    SendGrid sg = new SendGrid(API_KEY);
 	    Request request = new Request();
 	    try {
 	      request.setMethod(Method.POST);
@@ -34,5 +41,16 @@ public class EmailService {
 	    } catch (IOException ex) {
 	      throw ex;
 	    }
-	}
+	}	
+
+    public void sendSms(String toPhoneNumber, String text) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new PhoneNumber(toPhoneNumber),
+                new PhoneNumber("+16072988583"),
+                text)
+            .create();
+
+        System.out.println(message.getSid());
+    }
 }

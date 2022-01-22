@@ -33,7 +33,7 @@ public class CompradorEntity {
 	private String cpf;
 	@OneToMany(mappedBy = "comprador")
 	private List<EnderecoEntity> enderecos;
-	
+	private String celular;
 	@OneToMany(mappedBy = "compradorAssociado")
 	private List<PedidoEntity> pedidos;
 	
@@ -97,6 +97,16 @@ public class CompradorEntity {
 	public Long getId() {
 		return id;
 	}
+	
+	
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
 	
 	public void addPedido(PedidoEntity pedido) {
 		this.pedidos.add(pedido);

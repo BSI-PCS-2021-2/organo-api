@@ -31,7 +31,9 @@ public class FornecedorEntity {
 	private String senha;
 	@Column(name = "info_entrega")
 	private InfoEntrega infoEntrega;
-	
+	@Column(name = "telefone_movel")
+	private String telefoneMovel;
+
 	public FornecedorEntity() {}
 
 	public String getNomeFantasia() {
@@ -76,6 +78,14 @@ public class FornecedorEntity {
 
 	public void setInfoEntrega(InfoEntrega infoEntrega) {
 		this.infoEntrega = infoEntrega;
+	}
+	
+	public String getTelefoneMovel() {
+		return telefoneMovel;
+	}
+
+	public void setTelefoneMovel(String telefoneMovel) {
+		this.telefoneMovel = telefoneMovel;
 	}
 	
 }

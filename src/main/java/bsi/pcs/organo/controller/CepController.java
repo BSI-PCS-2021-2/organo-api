@@ -27,7 +27,6 @@ public class CepController {
 		if(cepVerificado != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(cepVerificado);
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cep não existe.");
-		
+		return ResponseEntity.status(HttpStatus.OK).body("Cep não existe.");
 	}
 }

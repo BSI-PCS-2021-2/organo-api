@@ -39,6 +39,8 @@ public class FornecedorEntity {
 	private String telefoneMovel;
 	@OneToMany(mappedBy = "fornecedor")
 	private List<HorarioEntity> horarios;
+	@OneToMany(mappedBy = "fornecedor")
+	private List<EnderecoEntity> enderecos;
 
 	public FornecedorEntity() {}
 
@@ -107,7 +109,17 @@ public class FornecedorEntity {
 		return h;
 	}
 
+	public List<EnderecoEntity> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EnderecoEntity> enderecos) {
+		this.enderecos = enderecos;
+	}
+
 	public void setHorarios(List<HorarioEntity> horarios) {
 		this.horarios = horarios;
 	}
+	
+	
 }

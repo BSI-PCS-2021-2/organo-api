@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsi.pcs.organo.entity.EnderecoEntity;
 import bsi.pcs.organo.entity.FornecedorEntity;
 import bsi.pcs.organo.entity.HorarioEntity;
 import bsi.pcs.organo.entity.PedidoEntity;
 import bsi.pcs.organo.entity.ProdutoEntity;
+import bsi.pcs.organo.repository.EnderecoRepository;
 import bsi.pcs.organo.repository.FornecedorRepository;
 import bsi.pcs.organo.repository.HorarioRepository;
 import bsi.pcs.organo.repository.PedidoRepository;
@@ -29,12 +31,22 @@ public class FornecedorService {
 	@Autowired
 	private HorarioRepository horarioRepository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public List<FornecedorEntity> listFornecedores() {
 		return this.fornecedorRepository.findAll();
 	}
 	
-	public void cadastrar(FornecedorEntity fornecedor) {
+	public void cadastrar(FornecedorEntity fornecedor) {		
 		this.fornecedorRepository.save(fornecedor);
+		
+		if(!fornecedor.getEnderecos().isEmpty()) {
+			for(EnderecoEntity endereco : fornecedor.getEnderecos()) {
+				endereco.setFornecedor(fornecedor);
+				this.enderecoRepository.save(endereco);
+			}
+		}
 		
 		if(!fornecedor.getHorarios().isEmpty()) {
 			for(HorarioEntity horario : fornecedor.getHorarios()) {

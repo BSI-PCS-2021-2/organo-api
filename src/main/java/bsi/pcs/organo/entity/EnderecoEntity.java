@@ -1,5 +1,4 @@
 package bsi.pcs.organo.entity;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +29,10 @@ public class EnderecoEntity {
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private CompradorEntity comprador;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@ManyToOne
+	@JoinColumn(name = "fornecedor_id")
+	private FornecedorEntity fornecedor;
 	
 	public EnderecoEntity() {}
 	
@@ -71,5 +74,12 @@ public class EnderecoEntity {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
+
+	public FornecedorEntity getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(FornecedorEntity fornecedor) {
+		this.fornecedor = fornecedor;
+	}
 }

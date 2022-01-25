@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import bsi.pcs.organo.entity.EnderecoEntity;
 import bsi.pcs.organo.entity.FornecedorEntity;
 import bsi.pcs.organo.entity.HorarioEntity;
+import bsi.pcs.organo.entity.ItemEntity;
 import bsi.pcs.organo.entity.PedidoEntity;
 import bsi.pcs.organo.entity.ProdutoEntity;
 import bsi.pcs.organo.repository.EnderecoRepository;
 import bsi.pcs.organo.repository.FornecedorRepository;
 import bsi.pcs.organo.repository.HorarioRepository;
+import bsi.pcs.organo.repository.ItemRepository;
 import bsi.pcs.organo.repository.PedidoRepository;
 import bsi.pcs.organo.repository.ProdutoRepository;
+import bsi.pcs.organo.util.RelatorioDeVendas;
 
 @Service
 public class FornecedorService {
@@ -33,6 +36,9 @@ public class FornecedorService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	public List<FornecedorEntity> listFornecedores() {
 		return this.fornecedorRepository.findAll();
@@ -83,5 +89,28 @@ public class FornecedorService {
 	public List<PedidoEntity> listarPedidos(String cnpj) {
 		List<PedidoEntity> pedidosEncontrados = this.pedidoRepository.findByFornecedorCnpj(cnpj);
 		return pedidosEncontrados;
+	}
+	
+	public RelatorioDeVendas gerarRelatorioDeVendas(FornecedorEntity fornecedor) {
+		RelatorioDeVendas relatorio = new RelatorioDeVendas();
+		String cnpj = fornecedor.getCnpj();
+		
+		List<PedidoEntity> pedidos = this.listarPedidos(cnpj);
+		List<ProdutoEntity> produtos = this.listarProdutos(cnpj);
+		List<ItemEntity> itens = this.itemRepository.findByFornecedorCnpj(cnpj);
+		
+		float totalGanhoPedidos = 0;
+		
+		for(PedidoEntity pedido : pedidos) {
+			totalGanhoPedidos += pedido.getValor();
+		}
+		
+		relatorio.setTotalDePedidos(pedidos.size());
+		relatorio.setTotalItensVendidos(itens.size());
+		relatorio.setTotalProdutosCadastrados(produtos.size());
+		relatorio.setGanhoTotalDePedidos(totalGanhoPedidos);
+		relatorio.setFornecedor(fornecedor.getNomeFantasia());
+		
+		return relatorio;
 	}
 }

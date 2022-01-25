@@ -78,4 +78,13 @@ public class FornecedorController {
 	public ResponseEntity<?> listPedidos(@PathVariable(required = true) String cnpjFornecedor) {	
 		return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.listarPedidos(cnpjFornecedor)); 
 	}
+	
+	@GetMapping("/{cnpjFornecedor}/relatorioDeVendas")
+	public ResponseEntity<?> relatorioDeVendas(@PathVariable(required = true) String cnpjFornecedor) {
+		FornecedorEntity fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
+		if(fornecedorEncontrado != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.gerarRelatorioDeVendas(fornecedorEncontrado));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fornecedor não existe.");
+	}
 }

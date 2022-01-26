@@ -94,8 +94,8 @@ public class PedidoService {
 	}
 	
 	private void enviarSms(String celularComprador, String celularFornecedor) {
-		String contentComprador = "Recebemos seu pedido!";
-		String contentFornecedor = "Um pedido acabou de chegar para você!";
+		String contentComprador = "Organo - Recebemos seu pedido!";
+		String contentFornecedor = "Organo - Um pedido acabou de chegar para você!";
 		if(celularComprador != null) this.notificationService.sendSms("+55" + celularComprador, contentComprador);
 		if(celularFornecedor != null) this.notificationService.sendSms("+55" + celularFornecedor, contentFornecedor);
 	}

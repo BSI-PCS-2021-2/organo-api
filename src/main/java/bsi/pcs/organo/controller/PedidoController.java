@@ -27,14 +27,10 @@ public class PedidoController {
 	public ResponseEntity<?> register(@RequestBody(required = true) PedidoEntity pedido,
 									  @PathVariable(required = true) String fornecedorCnpj,
 									  @PathVariable(required = true) String compradorCpf) throws IOException {
-		
-		if(this.pedidoService.retornar(pedido.getDataEntrega(), fornecedorCnpj) != null) {
-			return ResponseEntity.badRequest().body("Pedido já foi registrado previamente.");
-		}
-		
+
 		this.pedidoService.registrar(pedido, compradorCpf, fornecedorCnpj);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Pedido registrado com sucesso."); 
-		
+	
 	}
 	
 	@PutMapping("/atualizarStatus/{pedidoId}")

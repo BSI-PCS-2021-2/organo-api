@@ -35,7 +35,6 @@ public class CompradorController {
 	
 	@PutMapping("/atualizar")
 	public ResponseEntity<?> update(@RequestBody(required = true) CompradorEntity comprador) {
-		
 		if(this.compradorService.retornar(comprador.getCpf()) == null) {
 			return ResponseEntity.badRequest().body("Comprador informado não existe");
 		}
@@ -47,7 +46,6 @@ public class CompradorController {
 	
 	@GetMapping("/{cpfComprador}")
 	public ResponseEntity<?> getComprador(@PathVariable(required = true) String cpfComprador) {
-		
 		CompradorEntity comprador = this.compradorService.retornar(cpfComprador);
 		if(comprador == null) return ResponseEntity.badRequest().body("CPF informado não está associado a nenhum comprador.");
 		

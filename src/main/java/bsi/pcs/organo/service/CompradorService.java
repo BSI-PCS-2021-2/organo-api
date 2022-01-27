@@ -45,7 +45,6 @@ public class CompradorService {
 		compradorEncontrado.setEmail(comprador.getEmail());
 		compradorEncontrado.setNome(comprador.getNome());
 		compradorEncontrado.setSobrenome(comprador.getSobrenome());
-		compradorEncontrado.setSenha(comprador.getSenha());
 		this.compradorRepository.save(compradorEncontrado);
 		
 		if(!comprador.getEnderecos().isEmpty()) {

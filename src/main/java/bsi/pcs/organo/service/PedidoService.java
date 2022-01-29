@@ -50,11 +50,12 @@ public class PedidoService {
 		return this.pedidoRepository.findById(pedidoId);
 	}
 
-	public void atualizarStatus(Long pedidoId, String status) {
+	public PedidoEntity atualizarStatus(Long pedidoId, String status) {
 		Optional<PedidoEntity> pedidoEncontrado = this.pedidoRepository.findById(pedidoId);
 		Status stat = Status.valueOf(status);
 		pedidoEncontrado.get().setStatus(stat);
 		this.pedidoRepository.save(pedidoEncontrado.get());
+		return pedidoEncontrado.get();
 	}
 
 	public Object retornar(Date dataEntrega, String fornecedorCnpj) {

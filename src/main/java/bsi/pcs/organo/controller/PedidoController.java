@@ -40,8 +40,7 @@ public class PedidoController {
 			return ResponseEntity.badRequest().body("Pedido não existe.");
 		}
 		
-		this.pedidoService.atualizarStatus(pedidoId, status);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Status do pedido atualizado com sucesso."); 
+		return ResponseEntity.status(HttpStatus.OK).body(this.pedidoService.atualizarStatus(pedidoId, status)); 
 		
 	}
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
+// import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 import bsi.pcs.organo.util.InfoEntrega;
@@ -31,7 +31,7 @@ public class FornecedorEntity {
 	@NotNull
 	private String cnpj;
 	private String email;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	@Column(name = "info_entrega")
 	private InfoEntrega infoEntrega;

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -25,7 +24,6 @@ public class CompradorEntity {
 	@Column(name = "comprador_id")
 	private Long id;
 	private String email;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	private String nome;
 	private String sobrenome;

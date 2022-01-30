@@ -71,7 +71,7 @@ public class FornecedorService {
 		FornecedorEntity fornecedorEncontrado = this.fornecedorRepository.getByCnpj(fornecedor.getCnpj());
 		fornecedorEncontrado.setEmail(fornecedor.getEmail());
 		fornecedorEncontrado.setNomeFantasia(fornecedor.getNomeFantasia());
-		fornecedorEncontrado.setSenha(fornecedor.getSenha());
+		fornecedorEncontrado.setSenha(fornecedor.getSenha());	
 		this.fornecedorRepository.save(fornecedorEncontrado);
 	}
 

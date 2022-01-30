@@ -28,18 +28,20 @@ public class ProdutoService {
 		return pe.get();
 	}
 	
-	public void atualizar(ProdutoEntity produto) {
+	public ProdutoEntity atualizar(ProdutoEntity produto) {
 		ProdutoEntity produtoEncontrado = this.produtoRepository.findByFornecedorCnpjAndNome(produto.getFornecedor().getCnpj(), produto.getNome());
 		produtoEncontrado.setNome(produto.getNome());
 		produtoEncontrado.setFotoUrl(produto.getFotoUrl());
 		produtoEncontrado.setPreco(produto.getPreco());
 		produtoEncontrado.setValidade(produto.getValidade());
 		this.produtoRepository.save(produtoEncontrado);
+		return produtoEncontrado;
 	}
 
 	public void deletarProduto(Long produtoId) {
 		Optional<ProdutoEntity> pe = this.produtoRepository.findById(produtoId);
 		ProdutoEntity produtoEncontrado = pe.get();
-		this.produtoRepository.delete(produtoEncontrado);
+		produtoEncontrado.setDeleted(true);
+		this.produtoRepository.save(produtoEncontrado);
 	}
 }

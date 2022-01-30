@@ -51,8 +51,7 @@ public class ProdutoController {
 			return ResponseEntity.badRequest().body("Produto informado não existe");
 		}
 		
-		this.produtoService.atualizar(produto);
-		return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado com sucesso."); 
+		return ResponseEntity.status(HttpStatus.OK).body(this.produtoService.atualizar(produto)); 
 		
 	}
 	

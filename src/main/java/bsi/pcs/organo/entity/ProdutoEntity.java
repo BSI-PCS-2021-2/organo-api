@@ -32,6 +32,7 @@ public class ProdutoEntity {
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private FornecedorEntity fornecedor;
+	private boolean deleted;
 	
 	public ProdutoEntity() {}
 
@@ -85,6 +86,14 @@ public class ProdutoEntity {
 	
 	public int getQuantidade() {
 		return quantidade;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

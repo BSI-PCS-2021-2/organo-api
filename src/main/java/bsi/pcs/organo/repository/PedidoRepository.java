@@ -20,7 +20,7 @@ public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 			  nativeQuery = true)
 	public List<PedidoEntity> findByFornecedorCnpj(String cnpj);
 	
-	@Query(value = "SELECT * FROM pedido p INNER JOIN comprador c on (c.cpf = ?1)", 
+	@Query(value = "SELECT * FROM pedido p INNER JOIN comprador c on (c.cpf = ?1 and c.comprador_id = p.comprador_id)", 
 			  nativeQuery = true)
 	public List<PedidoEntity> findByCompradorCpf(String cpf);
 }

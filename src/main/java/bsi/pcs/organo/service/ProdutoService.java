@@ -34,6 +34,7 @@ public class ProdutoService {
 		produtoEncontrado.setFotoUrl(produto.getFotoUrl());
 		produtoEncontrado.setPreco(produto.getPreco());
 		produtoEncontrado.setValidade(produto.getValidade());
+		produtoEncontrado.setQuantidade(produto.getQuantidade());
 		this.produtoRepository.save(produtoEncontrado);
 		return produtoEncontrado;
 	}

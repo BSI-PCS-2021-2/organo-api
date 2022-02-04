@@ -54,6 +54,7 @@ public class CompradorService {
 				if(enderecoEncontrado == null) {
 					ee.setComprador(compradorEncontrado);
 					this.enderecoRepository.save(ee);
+					this.enderecoRepository.delete(compradorEncontrado.getEnderecos().get(0));
 				}
 			}
 		}

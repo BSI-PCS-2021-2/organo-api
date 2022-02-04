@@ -73,6 +73,17 @@ public class FornecedorService {
 		fornecedorEncontrado.setNomeFantasia(fornecedor.getNomeFantasia());
 		fornecedorEncontrado.setSenha(fornecedor.getSenha());	
 		this.fornecedorRepository.save(fornecedorEncontrado);
+		
+		if(!fornecedor.getEnderecos().isEmpty()) {
+			for(EnderecoEntity ee : fornecedor.getEnderecos()) {
+				EnderecoEntity enderecoEncontrado = this.enderecoRepository.findByCepRuaNumeroComplementoFornecedorId(ee.getCep(), ee.getRua(), ee.getNumero(), ee.getComplemento(), fornecedorEncontrado.getId());
+				if(enderecoEncontrado == null) {
+					ee.setFornecedor(fornecedorEncontrado);
+					this.enderecoRepository.save(ee);
+					this.enderecoRepository.delete(fornecedorEncontrado.getEnderecos().get(0));
+				}
+			}
+		}
 	}
 
 	public FornecedorEntity autenticar(FornecedorEntity fornecedor) {
